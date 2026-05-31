@@ -1,5 +1,6 @@
 import './App.css'
-
+// Main component responsible for storgin the tasks state
+// Coordinating the data flow between components
 function App() {
 
   return (
