@@ -26,13 +26,32 @@ function App() {
         return task.id !== taskId
       })
     })
-}
+ }
+
+  function toggleTaskComplete(taskId) {
+    setTaskState((currentTasks) => {
+      return currentTasks.map((task) => {
+        if(task.id === taskId) {
+          return {
+            ...task,
+            isCompleted: !task.isCompleted
+          }
+        } else {
+          return task
+        }
+      }) 
+    })
+    console.log(taskState)
+  }
 
   return (
     <>
       <Header/>
       <TaskForm onAddTask={addTask}/>
-      <TaskList tasks={taskState} onRemoveTask={removeTask}/>
+      <TaskList 
+        tasks={taskState}
+        onRemoveTask={removeTask}
+        onToggleTaskComplete={toggleTaskComplete}/>
     </>
   )
 }

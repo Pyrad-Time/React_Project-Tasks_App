@@ -8,7 +8,12 @@ export default function TaskList (props) {
             <ul className="taskList__tasks">
                 {props.tasks.map((task) => {
                     return (
-                        <TaskCard key={task.id} task={task} onRemoveTask={props.onRemoveTask}/>
+                        <TaskCard 
+                            key={task.id}
+                            task={task}
+                            onRemoveTask={props.onRemoveTask}
+                            onToggleTaskComplete={props.onToggleTaskComplete}
+                        />
                     )
                 })}
             </ul>

@@ -8,6 +8,10 @@ export default function TaskCard(props) {
                 {props.task.title}
             </span>
             <button onClick={() => props.onRemoveTask(props.task.id)}>Remove</button>
+            <input type="checkbox" id={props.task.id}  
+                onChange={() => {props.onToggleTaskComplete(props.task.id)}}
+                ></input>
+            <label htmlFor={props.taks.id}></label>
         </li>
     )
 }
