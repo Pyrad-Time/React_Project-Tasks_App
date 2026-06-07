@@ -11,7 +11,7 @@ export default function TaskCard(props) {
             <input type="checkbox" id={props.task.id}  
                 onChange={() => {props.onToggleTaskComplete(props.task.id)}}
                 ></input>
-            <label htmlFor={props.taks.id}></label>
+            <label htmlFor={props.task.id}></label>
         </li>
     )
 }
