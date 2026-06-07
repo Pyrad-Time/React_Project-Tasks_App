@@ -7,6 +7,7 @@ export default function TaskCard(props) {
             <span className="taskCard__title">
                 {props.task.title}
             </span>
+            <button onClick={() => props.onRemoveTask(props.task.id)}>Remove</button>
         </li>
     )
 }

@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import './App.css'
-import "./components/Header/Header.jsx"
 import Header from './components/Header/Header.jsx'
 import TaskForm from './components/TaskForm/TaskForm.jsx'
 import TaskList from './components/TaskList/TaskList.jsx'
@@ -18,14 +17,22 @@ function App() {
       isCompleted: false
     }
 
-    setTaskState((currentTask) => [...currentTask, newTask])
+    setTaskState((currentTasks) => [...currentTasks, newTask])
   }
+
+  function removeTask(taskId) {
+    setTaskState((currentTasks) => {
+      return currentTasks.filter((task) => {
+        return task.id !== taskId
+      })
+    })
+}
 
   return (
     <>
       <Header/>
       <TaskForm onAddTask={addTask}/>
-      <TaskList tasks={taskState}/>
+      <TaskList tasks={taskState} onRemoveTask={removeTask}/>
     </>
   )
 }
