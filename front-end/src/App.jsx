@@ -57,9 +57,14 @@ function App() {
     return true
   })
 
+  const completedTasks = taskState.filter((task) => {
+    return task.isCompleted === true
+  }).length
+  const totalTasks = taskState.length
+
   return (
     <>
-      <Header/>
+      <Header onCompletedTasks={completedTasks} onTotalTasks={totalTasks}/>
       <TaskForm onAddTask={addTask}/>
       <TaskFilter 
         activeFilter={activeFilter}
