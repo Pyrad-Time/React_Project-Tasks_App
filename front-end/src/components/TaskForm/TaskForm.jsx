@@ -9,25 +9,25 @@ export default function TaskForm(props) {
     const [taskTitle, setTaskTitle] = useState("")
 
     function handleSubmit (event) {
-    event.preventDefault()
-    
-    if(taskTitle === "") {
-        alert("Digite um valor válido")
-        return
-    }
-    props.onAddTask(taskTitle)
+        event.preventDefault()
+        
+        const trimmedTaskTitle = taskTitle.trim()
 
-    setTaskTitle("")
-}
+        if(trimmedTaskTitle === "") {
+            alert("Digite um valor válido")
+            return
+        }
+        props.onAddTask(trimmedTaskTitle)
+
+        setTaskTitle("")
+    }
 
     return (
         <section className="taskForm__container">
             <form 
                 className="taskForm__form"
                 action=""
-                onSubmit={(e) => {
-                    handleSubmit(e)
-                }}
+                onSubmit={handleSubmit}
                 >
 
                 <input 
