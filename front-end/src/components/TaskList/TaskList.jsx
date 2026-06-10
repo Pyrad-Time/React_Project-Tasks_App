@@ -1,5 +1,7 @@
 // Component responsible for receiving the tasks list
 // and rendering each task on the screen
+import "./TaskList.css"
+
 import TaskCard from "../TaskCard/TaskCard.jsx"
 
 export default function TaskList(props) {
