@@ -63,18 +63,24 @@ function App() {
   const totalTasks = taskState.length
 
   return (
-    <>
-      <Header onCompletedTasks={completedTasks} onTotalTasks={totalTasks}/>
-      <TaskForm onAddTask={addTask}/>
-      <TaskFilter 
-        activeFilter={activeFilter}
-        onChangeFilter={setActiveFilter}
-      />
-      <TaskList 
-        tasks={filteredTasks}
-        onRemoveTask={removeTask}
-        onToggleTaskComplete={toggleTaskComplete}/>
-    </>
+      <main className="app__container">
+        <Header 
+          onCompletedTasks={completedTasks}
+          onTotalTasks={totalTasks}
+        />
+        <TaskForm 
+          onAddTask={addTask}
+        />
+        <TaskFilter 
+          activeFilter={activeFilter}
+          onChangeFilter={setActiveFilter}
+        />
+        <TaskList 
+          tasks={filteredTasks}
+          onRemoveTask={removeTask}
+          onToggleTaskComplete={toggleTaskComplete}
+        />
+      </main>
   )
 }
 
