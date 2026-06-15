@@ -22,4 +22,21 @@ function createTask(req, res) {
     return res.status(201).json(newTask)
 }
 
+function deleteTask(req, res) {
+    const { id } = req.params
+
+    const taskIndex = tasks.findIndex((task) => {
+        return task.id === Number(id)
+    })
+
+    if(taskIndex === -1) {
+        return res.status(404).json({ message: "Task Not Found" })
+    }
+
+    const deletedTask = tasks.splice(taskIndex, 1)
+
+    return res.status(200).json(deletedTask[0])
+}
+
+
 export { getTasks, createTask }
