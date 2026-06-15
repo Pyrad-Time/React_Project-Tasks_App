@@ -38,5 +38,21 @@ function deleteTask(req, res) {
     return res.status(200).json(deletedTask[0])
 }
 
+function toggleTask(req, res) {
+    const { id } = req.params
 
-export { getTasks, createTask }
+    const task = tasks.find((task) => {
+        return task.id === Number(id)
+    })
+
+    if(!task) {
+        return res.status(400).json({ message: "Task not found" })
+    }
+
+    task.isCompleted = !task.isCompleted
+
+    return res.status(200).json(task)
+}
+
+
+export { getTasks, createTask, deleteTask, toggleTask }
