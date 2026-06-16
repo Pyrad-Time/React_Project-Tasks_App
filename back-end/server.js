@@ -1,3 +1,4 @@
+import { pool } from "./database/connection.js"
 import express from "express"
 import cors from "cors"
 
@@ -12,6 +13,14 @@ app.use(express.json())
 app.get("/", (req, res) => {
     return res.json({ message: "API is running" })
 })
+
+app.get("/db-test", async (req, res) => {
+    const result = await pool.query("SELECT NOW()")
+
+    return res.json(result.rows[0])
+})
+
+app.post("/", (req, res) => {})
 
 app.use("/tasks", taskRoutes)
 

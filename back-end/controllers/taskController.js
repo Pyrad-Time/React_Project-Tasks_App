@@ -54,5 +54,4 @@ function toggleTask(req, res) {
     return res.status(200).json(task)
 }
 
-
 export { getTasks, createTask, deleteTask, toggleTask }
