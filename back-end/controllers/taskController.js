@@ -1,10 +1,23 @@
-import { tasks } from "../data/tasks.js"
+import { pool } from "../database/connection.js"
 
-function getTasks(req, res) {
-    return res.status(200).json(tasks)
+async function getTasks(req, res) {
+    try {
+        const result = await pool.query(`
+            SELECT
+                id,
+                title,
+                is_completed AS "isCompleted",
+                created_at AS "createdAt"
+            FROM tasks
+            ORDER BY created_at DESC
+            `)
+        return res.status(200).json(result.rows)
+    } catch(error){
+        return res.status(500).json({ message: "Error fetching tasks" })
+    }
 }
 
-function createTask(req, res) {
+async function createTask(req, res) {
     const { title } = req.body
 
     if(!title || title.trim() === "") {
