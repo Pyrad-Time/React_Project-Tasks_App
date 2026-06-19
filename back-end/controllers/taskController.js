@@ -43,20 +43,28 @@ async function createTask(req, res) {
     }
 }
 
-function deleteTask(req, res) {
-    const { id } = req.params
+async function deleteTask(req, res) {
+    try {
+        const { id } = req.params
 
-    const taskIndex = tasks.findIndex((task) => {
-        return task.id === Number(id)
-    })
+        const result = await pool.query(`
+            DELETE FROM tasks
+            WHERE id = $1
+            RETURNING
+                id,
+                title,
+                is_completed AS "isCompleted",
+                created_at AS "createdAt"
+            `, [id])
+        
+            if(result.rows.length === 0) {
+                return res.status(404).json({ message: "Task not found" })
+            }
 
-    if(taskIndex === -1) {
-        return res.status(404).json({ message: "Task Not Found" })
+        return res.status(200).json(result.rows[0])
+    } catch(error) {
+        return res.status(500).json({ messsage: "Error deleting task" })
     }
-
-    const deletedTask = tasks.splice(taskIndex, 1)
-
-    return res.status(200).json(deletedTask[0])
 }
 
 function toggleTask(req, res) {
