@@ -18,21 +18,29 @@ async function getTasks(req, res) {
 }
 
 async function createTask(req, res) {
-    const { title } = req.body
+    try {
+        const { title } = req.body
 
-    if(!title || title.trim() === "") {
-        return res.status(400).json({ message: "Task title is required" })
+        if(!title || title.trim() === "") {
+            return res.status(400).json({ message: "Task title is required" })
+        }
+
+        const result = await pool.query(`
+            INSERT INTO tasks (title)
+            VALUES ($1)
+            RETURNING
+                id,
+                title,
+                is_completed AS "isCompleted",
+                created_at AS "createdAt"
+                
+            `,
+            [title.trim()]
+        )
+        return res.status(201).json(result.rows[0])
+    } catch(error) {
+        return res.status(500).json({ message: "Error creating task" })
     }
-
-    const newTask = {
-        id: Date.now(),
-        title: title.trim(),
-        isCompleted: false
-    }
-
-    tasks.push(newTask)
-
-    return res.status(201).json(newTask)
 }
 
 function deleteTask(req, res) {
