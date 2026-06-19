@@ -67,20 +67,27 @@ async function deleteTask(req, res) {
     }
 }
 
-function toggleTask(req, res) {
-    const { id } = req.params
+async function toggleTask(req, res) {
+    try {
+        const { id } = req.params
 
-    const task = tasks.find((task) => {
-        return task.id === Number(id)
-    })
+        const result = await pool.query(`
+            UPDATE tasks
+            SET is_completed = NOT is_completed
+            WHERE id = $1
+            RETURNING 
+                id,
+                title,
+                is_completed AS "isCompleted",
+                created_at AS "createdAt"
+            `, [id])
 
-    if(!task) {
-        return res.status(400).json({ message: "Task not found" })
+        if(result.rows.length === 0) {
+            return res.status(404).json({ message: "Task not found" })
+        }
+    } catch(error) {
+        return res.status(500).json({ message: "Error toggling task" })
     }
-
-    task.isCompleted = !task.isCompleted
-
-    return res.status(200).json(task)
 }
 
 export { getTasks, createTask, deleteTask, toggleTask }
