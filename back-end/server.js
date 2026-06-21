@@ -5,7 +5,7 @@ import cors from "cors"
 import taskRoutes from "./routes/taskRoutes.js"
 
 const app = express()
-const PORT = 3000
+const PORT = process.env.PORT || 3000
 
 app.use(cors())
 app.use(express.json())
@@ -19,8 +19,6 @@ app.get("/db-test", async (req, res) => {
 
     return res.json(result.rows[0])
 })
-
-app.post("/", (req, res) => {})
 
 app.use("/tasks", taskRoutes)
 
