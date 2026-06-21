@@ -80,14 +80,15 @@ async function toggleTask(req, res) {
                 title,
                 is_completed AS "isCompleted",
                 created_at AS "createdAt"
-            `, [id])
+        `, [id])
 
-        if(result.rows.length === 0) {
+        if (result.rows.length === 0) {
             return res.status(404).json({ message: "Task not found" })
         }
+
+        return res.status(200).json(result.rows[0])
     } catch(error) {
         return res.status(500).json({ message: "Error toggling task" })
     }
 }
-
 export { getTasks, createTask, deleteTask, toggleTask }

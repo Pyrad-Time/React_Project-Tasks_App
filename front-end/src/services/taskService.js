@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:3000/taks"
+const API_URL = "http://localhost:3000/tasks"
 
 async function getTasks() {
     const response = await fetch(API_URL)
@@ -46,6 +46,8 @@ async function toggleTask(id){
     if(!response.ok) {
         throw new Error("Erro ao atualizar checkbox")
     }
+
+    return response.json()
 }
 
 export { getTasks, createTask, deleteTask, toggleTask }
